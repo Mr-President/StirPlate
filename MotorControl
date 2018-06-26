@@ -1,0 +1,12 @@
+int potPin = 26; // shoudl be analog pin A7
+int pwPin = 25; // should be analog pin A6
+int Val = 0; // storage for the input value
+int PVal = 0; //pwm value storage
+
+void setup(){
+	pinMode(pwPin, OUTPUT); //declare the pwm pin as an out
+}
+void loop(){
+	val = analogRead(potPin);
+
+}
