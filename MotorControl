@@ -1,12 +1,25 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
 int potPin = 26; // shoudl be analog pin A7
 int pwPin = 25; // should be analog pin A6
 int Val = 0; // storage for the input value
 int PVal = 0; //pwm value storage
 
+
+LiquidCrystal_I2C lcd(0x27,16, 4);
+
 void setup(){
 	pinMode(pwPin, OUTPUT); //declare the pwm pin as an out
+	lcd.begin();
+	lcd.backlight();
 }
 void loop(){
 	val = analogRead(potPin);
+	lcdwrite(val)
 
+}
+
+void lcdwrite(val){
+	lcd.print('Currnet Value:' + val)
 }
