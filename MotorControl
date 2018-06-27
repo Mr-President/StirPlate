@@ -1,10 +1,15 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <math.h>
 
 int potPin = 26; // shoudl be analog pin A7
 int pwPin = 25; // should be analog pin A6
-int Val = 0; // storage for the input value
+int CurVal = 0; // storage for the input value
+int OldVal = 0; // storage for the old value
 int PVal = 0; //pwm value storage
+float pwival = 0.0; // value used later for pwm calc
+int pwmval = 0; // the pwm value that gets calculated later
+int pwm = 0;
 
 
 LiquidCrystal_I2C lcd(0x27,16, 4);
@@ -15,11 +20,20 @@ void setup(){
 	lcd.backlight();
 }
 void loop(){
-	val = analogRead(potPin);
-	lcdwrite(val)
-
+	CurVal = analogRead(potPin); // get the newest setting from the pot
+	if (CurVal != OldVal){ //checks if the current val is equal to the old value and doesnt write a new value if it is the same
+		pwm = getPWM(CurVal);
+		lcdwrite(pwm); // write if they are different
+	}
+	OldVal = CurVal; // updates the old value to the current value for the next loop
 }
 
-void lcdwrite(val){
-	lcd.print('Currnet Value:' + val)
+void lcdwrite(val){ // fucntion to write to the LCD
+	lcd.print('Currnet Value: ' + val);
+}
+
+int getPWM(potval){ // function to look up the PWM setting based on analog value from pot input
+	pwival = potval * 0.249266862;
+	pwmval = round(pwival);
+	return pwmvale;
 }
